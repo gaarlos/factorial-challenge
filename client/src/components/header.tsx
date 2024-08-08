@@ -3,7 +3,7 @@ import factorialLogo from '/factorial-logo.png';
 export const Header = () => {
   return (
     <header>
-      <nav className="border-b p-3">
+      <nav className="border-b h-20 flex items-center">
         <a
           className="inline-block"
           href="https://factorialhr.com/"
