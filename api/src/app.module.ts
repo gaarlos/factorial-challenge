@@ -7,22 +7,24 @@ import { MetricEntryMapper } from './infrastructure/mappers/metric-entry.mapper'
 import { SQLiteMetricRepository } from './infrastructure/repositories/sqlite-metric.repository';
 import { Metric } from './infrastructure/entities/metric.entity';
 import { MetricEntry } from './infrastructure/entities/metric-entry.entity';
+import { MetricRepository } from './domain/repositories/metric.repository';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: ':memory:',
+      database: __dirname + '/../db/database.db',
       entities: [Metric, MetricEntry],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Metric, MetricEntry]),
   ],
   controllers: [MetricsController],
   providers: [
+    MetricsService,
     MetricMapper,
     MetricEntryMapper,
-    SQLiteMetricRepository,
-    MetricsService,
+    { provide: MetricRepository, useClass: SQLiteMetricRepository },
   ],
 })
 export class AppModule {}

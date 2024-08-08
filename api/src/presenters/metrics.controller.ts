@@ -25,21 +25,21 @@ export class MetricsController {
 
   @Get('/:id')
   async getMetric(@Param('id', ParseUUIDPipe) metricId: string) {
-    const metrics = await this.metricsService.getMetric(metricId);
-    return metrics;
+    const metric = await this.metricsService.getMetric(metricId);
+    return metric;
   }
 
   @Get('/:id/:period')
   async getMetricByPeriod(
     @Param('id', ParseUUIDPipe) metricId: string,
-    @Param('period', ParseEnumPipe<Period>) period: Period,
+    @Param('period', new ParseEnumPipe(Period)) period: Period,
   ) {
-    const metrics = await this.metricsService.getMetricByPeriod(
+    const metric = await this.metricsService.getMetricByPeriod(
       metricId,
       period,
     );
 
-    return metrics;
+    return metric;
   }
 
   @Post()
