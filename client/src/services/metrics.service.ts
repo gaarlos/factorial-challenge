@@ -15,7 +15,12 @@ export class MetricsService {
   }
 
   private static async fetch<T>(url: URL, init: RequestInit = {}) {
-    const response = await fetch(url, init);
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      ...init,
+    });
 
     if (!response.ok) throw new NetworkError();
 
