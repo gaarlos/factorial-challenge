@@ -8,8 +8,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { MetricsService } from '../application/metrics.service';
 import { Period } from 'src/domain/enum/period.enum';
+import { MetricsService } from '../application/metrics.service';
 import { CreateMetricRequestDto } from './dto/create-metric-request.dto';
 import { AddEntryRequestDto } from './dto/add-entry-request.dto';
 

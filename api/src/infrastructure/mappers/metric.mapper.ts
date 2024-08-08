@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Metric as MetricEntity } from '../entities/metric.entity';
 import { Metric } from 'src/domain/entities/metric.entity';
-import { MetricEntry } from 'src/domain/entities/metric-entry.entity';
 import { MetricEntryMapper } from './metric-entry.mapper';
 
 @Injectable()
@@ -12,7 +11,7 @@ export class MetricMapper {
     return Metric.fromPrimitives({
       id: entity.id,
       name: entity.name,
-      entries: entity.entries.map(MetricEntry.fromPrimitives),
+      entries: entity.entries.map(this.metricEntryMapper.toDomain),
     });
   }
 

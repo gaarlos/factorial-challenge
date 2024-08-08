@@ -1,9 +1,8 @@
-import { MetricEntry as IMetricEntry } from 'src/domain/entities/metric-entry.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Metric } from './metric.entity';
 
 @Entity()
-export class MetricEntry implements IMetricEntry {
+export class MetricEntry {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

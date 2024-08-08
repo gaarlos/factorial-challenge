@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { MetricRepository } from 'src/domain/repositories/metric.repository';
-import { CreateMetricDto } from './dto/create-metric.dto';
-import { AddEntryDto } from './dto/add-entry.dto';
 import { Metric } from 'src/domain/entities/metric.entity';
 import { MetricEntry } from 'src/domain/entities/metric-entry.entity';
 import { Period } from 'src/domain/enum/period.enum';
+import { CreateMetricDto } from './dto/create-metric.dto';
+import { AddEntryDto } from './dto/add-entry.dto';
 
 @Injectable()
 export class MetricsService {
