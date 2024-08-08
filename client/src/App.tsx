@@ -1,14 +1,15 @@
 import { Header } from './components/header';
-import { Dashboard } from './components/dashboard';
+import { Main } from './components/main';
 import { Footer } from './components/footer';
+import { Dashboard } from './components/dashboard';
 
 export const App = () => {
   return (
     <>
       <Header />
-      <main>
+      <Main>
         <Dashboard />
-      </main>
+      </Main>
       <Footer />
     </>
   );
