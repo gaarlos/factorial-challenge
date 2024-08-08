@@ -4,10 +4,23 @@ import { CreateMetricDto } from './dto/create-metric.dto';
 import { AddEntryDto } from './dto/add-entry.dto';
 import { Metric } from 'src/domain/entities/metric.entity';
 import { MetricEntry } from 'src/domain/entities/metric-entry.entity';
+import { Period } from 'src/domain/enum/period.enum';
 
 @Injectable()
 export class MetricsService {
   constructor(private readonly metricRepository: MetricRepository) {}
+
+  public async getMetrics() {
+    return this.metricRepository.findAll();
+  }
+
+  public async getMetric(id: string) {
+    return this.metricRepository.findById(id);
+  }
+
+  public async getMetricByPeriod(id: string, period: Period) {
+    return this.metricRepository.findByIdAndPeriod(id, period);
+  }
 
   public async create(createMetricDto: CreateMetricDto) {
     const metric = Metric.create(createMetricDto.name, []);
@@ -20,11 +33,11 @@ export class MetricsService {
     await this.metricRepository.save(metric);
   }
 
-  public async addMetric(addEntryDto: AddEntryDto) {
-    await this.metricRepository.findById(addEntryDto.metricId);
+  public async addMetric(metricId: string, addEntryDto: AddEntryDto) {
+    await this.metricRepository.findById(metricId);
 
     const metricEntry = MetricEntry.create(
-      addEntryDto.metricId,
+      metricId,
       addEntryDto.timestamp,
       addEntryDto.value,
     );

@@ -33,6 +33,11 @@ export class SQLiteMetricRepository implements MetricRepository {
     throw new Error('Invalid Period, must be one of "minute", "hour" or "day"');
   }
 
+  public async findAll(): Promise<Metric[]> {
+    const metricEntities = await this.metricRepository.find();
+    return metricEntities.map(this.metricMapper.toDomain);
+  }
+
   public async findById(id: string): Promise<Metric> {
     const metricEntity = await this.metricRepository.findOne({
       where: { id },
