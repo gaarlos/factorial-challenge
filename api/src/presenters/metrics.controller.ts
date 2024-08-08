@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseEnumPipe,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { MetricsService } from '../application/metrics.service';
 import { Period } from 'src/domain/enum/period.enum';
 import { CreateMetricRequestDto } from './dto/create-metric-request.dto';
@@ -15,15 +24,15 @@ export class MetricsController {
   }
 
   @Get('/:id')
-  async getMetric(@Param('id') metricId: string) {
+  async getMetric(@Param('id', ParseUUIDPipe) metricId: string) {
     const metrics = await this.metricsService.getMetric(metricId);
     return metrics;
   }
 
   @Get('/:id/:period')
   async getMetricByPeriod(
-    @Param('id') metricId: string,
-    @Param('period') period: Period,
+    @Param('id', ParseUUIDPipe) metricId: string,
+    @Param('period', ParseEnumPipe<Period>) period: Period,
   ) {
     const metrics = await this.metricsService.getMetricByPeriod(
       metricId,
@@ -40,7 +49,7 @@ export class MetricsController {
 
   @Patch(':id')
   async addEntryToMetric(
-    @Param('id') metricId: string,
+    @Param('id', ParseUUIDPipe) metricId: string,
     @Body() addEntryDto: AddEntryRequestDto,
   ) {
     await this.metricsService.addMetric(metricId, addEntryDto);
