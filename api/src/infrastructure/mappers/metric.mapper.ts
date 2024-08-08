@@ -11,7 +11,7 @@ export class MetricMapper {
     return Metric.fromPrimitives({
       id: entity.id,
       name: entity.name,
-      entries: entity.entries.map(this.metricEntryMapper.toDomain),
+      entries: entity.entries?.map(this.metricEntryMapper.toDomain) ?? [],
     });
   }
 
