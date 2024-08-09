@@ -7,10 +7,11 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { CreateMetricDto } from 'src/application/dto/create-metric.dto';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
 class CreateMetricEntryDto {
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   timestamp: Date;
 
   @IsNumber()
