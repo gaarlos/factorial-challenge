@@ -42,6 +42,7 @@ export class Metric {
 
   public fillWithFakeData() {
     const lastWeek = dayjs().subtract(1, 'w');
+    const randomRange = Math.floor(Math.random() * 500 + 100);
     const entries = [];
     let time = dayjs();
 
@@ -50,7 +51,7 @@ export class Metric {
         MetricEntry.create(
           this.getId(),
           time.toDate(),
-          Math.floor(Math.random() * 200),
+          Math.floor(Math.random() * randomRange),
         ),
       );
 
