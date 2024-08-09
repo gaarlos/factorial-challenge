@@ -5,7 +5,7 @@ import { NetworkError } from '../services/errors/network.error';
 import { MetricsService } from '../services/metrics.service';
 import { Period } from '../enums/period';
 
-export const useMetrics = (id: string, period = Period.DAY) => {
+export const useMetric = (id: string, period = Period.DAY) => {
   const [status, setStatus] = useState(Status.LOADING);
   const [metric, setMetric] = useState<Metric>();
 
