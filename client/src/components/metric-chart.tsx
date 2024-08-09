@@ -19,7 +19,7 @@ interface Props {
 export const MetricChart: FC<Props> = ({ metric, period }) => {
   const { data, average, domain } = useChart(metric.entries, period);
 
-  if (!data.length) {
+  if (!metric.entries?.length) {
     return <div className="my-6 italic">No data available</div>;
   }
 
