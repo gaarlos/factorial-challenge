@@ -14,3 +14,27 @@
 ## Tech stack
 
 I decided to go with TypeScript as language and to use NestJS for the API and React for the frontend client. The information will be stored in a SQLite database. It will be prefilled with some initial metrics.
+
+## To run the application
+
+Open a terminal and navigate to `api` folder, install dependencies and start the server
+
+```bash
+cd api
+npm install
+npm run start:dev
+```
+
+Open a terminal and navigate to `client` folder, install dependencies and run the project
+
+```bash
+cd api
+npm install
+npm run dev
+```
+
+## How it works
+
+When the app loads, no metrics are available. You can create one using the "Add metric" button. Then you can add values manually using the "Add entry" button or populate them automatically using the "Populate metric" button (it takes some time).
+
+The app shows the selected metric in a line chart, showing the average values for each point in the X Axis. You can check "Last hour", "Last 24 hours" and "Last week". Each one will request the needed data and show the chart and the total average.
