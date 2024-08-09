@@ -31,7 +31,7 @@ export const MetricChart: FC<Props> = ({ metric, period }) => {
           <Line type="monotone" dataKey="value" stroke="#8884d8" />
           <XAxis dataKey="time" domain={domain} />
           <YAxis />
-          <Tooltip />
+          <Tooltip formatter={(value) => [value, 'Value (avg)']} />
         </LineChart>
       </ResponsiveContainer>
     </>
