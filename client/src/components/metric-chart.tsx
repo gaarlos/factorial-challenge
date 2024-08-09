@@ -1,5 +1,12 @@
 import { FC } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 import { Period } from '../enums/period';
 import { Metric } from '../interfaces/metric';
 import { useChart } from '../hooks/use-chart';
@@ -19,12 +26,14 @@ export const MetricChart: FC<Props> = ({ metric, period }) => {
   return (
     <>
       <div className="my-6">Average: {average}</div>
-      <LineChart width={600} height={300} data={data}>
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        <XAxis dataKey="time" domain={domain} />
-        <YAxis />
-        <Tooltip />
-      </LineChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data}>
+          <Line type="monotone" dataKey="value" stroke="#8884d8" />
+          <XAxis dataKey="time" domain={domain} />
+          <YAxis />
+          <Tooltip />
+        </LineChart>
+      </ResponsiveContainer>
     </>
   );
 };
