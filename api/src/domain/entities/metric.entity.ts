@@ -58,7 +58,7 @@ export class Metric {
       time = time.subtract(1, 'm');
     }
 
-    this.setEntries(entries);
+    this.setEntries(this.entries.concat(entries));
   }
 
   public static generateId(): string {
