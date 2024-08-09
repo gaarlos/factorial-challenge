@@ -19,7 +19,10 @@ export class MetricsService {
   }
 
   public async getMetricByPeriod(id: string, period: Period) {
-    return this.metricRepository.findByIdAndPeriod(id, period);
+    const metric = await this.metricRepository.findById(id);
+    metric.filterEntriesByPeriod(period);
+
+    return metric;
   }
 
   public async create(createMetricDto: CreateMetricDto) {

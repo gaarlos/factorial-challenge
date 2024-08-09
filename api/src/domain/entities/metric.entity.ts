@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
+import * as dayjs from 'dayjs';
 import { MetricEntry } from './metric-entry.entity';
+import { Period } from '../enum/period.enum';
 
 interface MetricPrimitives {
   id: string;
@@ -30,6 +32,14 @@ export class Metric {
     this.entries = entries;
   }
 
+  public filterEntriesByPeriod(period: Period) {
+    const filterDate = this.getFilterDateByPeriod(period);
+
+    this.entries = this.entries.filter((entry) =>
+      dayjs(entry.getTimestamp()).isAfter(filterDate),
+    );
+  }
+
   public static generateId(): string {
     return uuidv4();
   }
@@ -41,5 +51,15 @@ export class Metric {
 
   public static fromPrimitives(props: MetricPrimitives): Metric {
     return new Metric(props.id, props.name, props.entries);
+  }
+
+  private getFilterDateByPeriod(period: Period): Date {
+    const now = dayjs();
+
+    if (period === Period.MINUTE) return now.subtract(1, 'hour').toDate();
+    if (period === Period.HOUR) return now.subtract(1, 'day').toDate();
+    if (period === Period.DAY) return now.subtract(1, 'week').toDate();
+
+    throw new Error('Invalid Period, must be one of "minute", "hour" or "day"');
   }
 }

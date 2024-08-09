@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MoreThan, Repository } from 'typeorm';
-import * as dayjs from 'dayjs';
-import { Period } from 'src/domain/enum/period.enum';
+import { Repository } from 'typeorm';
 import { MetricRepository } from 'src/domain/repositories/metric.repository';
 import { MetricNotFound } from 'src/domain/errors/metric-not-found.error';
 import { Metric } from 'src/domain/entities/metric.entity';
@@ -23,16 +21,6 @@ export class SQLiteMetricRepository implements MetricRepository {
     private readonly metricEntryMapper: MetricEntryMapper,
   ) {}
 
-  private getFilterDateByPeriod(period: Period): Date {
-    const now = dayjs();
-
-    if (period === Period.MINUTE) return now.subtract(1, 'hour').toDate();
-    if (period === Period.HOUR) return now.subtract(1, 'day').toDate();
-    if (period === Period.DAY) return now.subtract(1, 'week').toDate();
-
-    throw new Error('Invalid Period, must be one of "minute", "hour" or "day"');
-  }
-
   public async findAll(): Promise<Metric[]> {
     const metricEntities = await this.metricRepository.find();
     return metricEntities.map(this.metricMapper.toDomain);
@@ -41,23 +29,6 @@ export class SQLiteMetricRepository implements MetricRepository {
   public async findById(id: string): Promise<Metric> {
     const metricEntity = await this.metricRepository.findOne({
       where: { id },
-      relations: { entries: true },
-    });
-
-    if (!metricEntity) throw new MetricNotFound(id);
-
-    return this.metricMapper.toDomain(metricEntity);
-  }
-
-  public async findByIdAndPeriod(id: string, period: Period): Promise<Metric> {
-    const filterPeriod = this.getFilterDateByPeriod(period);
-    const metricEntity = await this.metricRepository.findOne({
-      where: {
-        id,
-        entries: {
-          timestamp: MoreThan(filterPeriod),
-        },
-      },
       relations: { entries: true },
     });
 
