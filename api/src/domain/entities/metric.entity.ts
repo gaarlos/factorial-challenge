@@ -40,6 +40,26 @@ export class Metric {
     );
   }
 
+  public fillWithFakeData() {
+    const lastWeek = dayjs().subtract(1, 'w');
+    const entries = [];
+    let time = dayjs();
+
+    while (time.isAfter(lastWeek)) {
+      entries.push(
+        MetricEntry.create(
+          this.getId(),
+          time.toDate(),
+          Math.floor(Math.random() * 200),
+        ),
+      );
+
+      time = time.subtract(1, 'm');
+    }
+
+    this.setEntries(entries);
+  }
+
   public static generateId(): string {
     return uuidv4();
   }
@@ -51,10 +71,6 @@ export class Metric {
 
   public static fromPrimitives(props: MetricPrimitives): Metric {
     return new Metric(props.id, props.name, props.entries);
-  }
-
-  public fillWithFakeData() {
-    this.entries = [];
   }
 
   private getFilterDateByPeriod(period: Period): Date {

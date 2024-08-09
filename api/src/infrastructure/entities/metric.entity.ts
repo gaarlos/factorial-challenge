@@ -12,6 +12,7 @@ export class Metric {
   @OneToMany(
     () => MetricEntry,
     (metricEntry: MetricEntry) => metricEntry.metric,
+    { cascade: true },
   )
   entries: MetricEntry[];
 }
