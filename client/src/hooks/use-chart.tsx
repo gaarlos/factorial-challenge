@@ -27,25 +27,23 @@ const getAverage = (entries: MetricEntry[] = []) => {
   return Math.round(total / entries.length);
 };
 
-const aggregateEntries = (entries: MetricEntry[], period: Period) => {
+const aggregateEntries = (
+  entries: MetricEntry[],
+  domain: string[],
+  period: Period,
+) => {
   const entriesByTime = Object.groupBy(entries, ({ timestamp }) =>
     dayjs(timestamp).format(formats[period]),
   );
 
-  return Object.entries(entriesByTime).map(([time, groupedEntries]) => ({
+  return domain.map((time) => ({
     time,
-    value: getAverage(groupedEntries),
+    value: getAverage(entriesByTime[time]),
   }));
 };
 
 export const useChart = (entries: MetricEntry[] = [], period = Period.DAY) => {
-  const data = useMemo(
-    () => aggregateEntries(entries, period),
-    [entries, period],
-  );
-
   const average = useMemo(() => getAverage(entries), [entries]);
-
   const domain = useMemo(() => {
     const domain = domains[period];
 
@@ -57,6 +55,11 @@ export const useChart = (entries: MetricEntry[] = [], period = Period.DAY) => {
 
     return domain;
   }, [period]);
+
+  const data = useMemo(
+    () => aggregateEntries(entries, domain, period),
+    [entries, domain, period],
+  );
 
   return { data, average, domain };
 };
