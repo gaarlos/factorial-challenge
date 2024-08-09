@@ -42,7 +42,7 @@ export const CreateMetricModal: FC<Props> = ({ show, setShow, refetch }) => {
           type="submit"
           className="mt-4 bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded"
         >
-          Add entries
+          Add metric
         </button>
       </form>
     </ModalWrapper>
