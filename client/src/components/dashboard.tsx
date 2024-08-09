@@ -4,7 +4,7 @@ import { CreateMetricModal } from './modals/create-metric-modal';
 import { Metric } from './metric';
 
 export const Dashboard = () => {
-  const { metrics } = useMetrics();
+  const { metrics, refetch } = useMetrics();
   const [selectedMetricId, setSelectedMetricId] = useState<string>();
   const [showModal, setShowModal] = useState(false);
 
@@ -18,7 +18,11 @@ export const Dashboard = () => {
 
   return (
     <div>
-      <CreateMetricModal show={showModal} setShow={setShowModal} />
+      <CreateMetricModal
+        show={showModal}
+        setShow={setShowModal}
+        refetch={refetch}
+      />
       <div className="flex justify-between">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <button

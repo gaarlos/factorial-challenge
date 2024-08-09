@@ -6,9 +6,15 @@ interface Props {
   metricId: string;
   show: boolean;
   setShow: (show: boolean) => void;
+  refetch: () => Promise<void>;
 }
 
-export const AddMetricEntryModal: FC<Props> = ({ metricId, show, setShow }) => {
+export const AddMetricEntryModal: FC<Props> = ({
+  metricId,
+  show,
+  setShow,
+  refetch,
+}) => {
   const [timestamp, setTimestamp] = useState(new Date().toString());
   const [value, setValue] = useState(0);
 
@@ -18,10 +24,11 @@ export const AddMetricEntryModal: FC<Props> = ({ metricId, show, setShow }) => {
 
       const entry = { metricId, timestamp, value };
       await MetricsService.addEntryToMetric(metricId, entry);
+      await refetch();
 
       setShow(false);
     },
-    [metricId, timestamp, value, setShow],
+    [metricId, timestamp, value, setShow, refetch],
   );
 
   return (

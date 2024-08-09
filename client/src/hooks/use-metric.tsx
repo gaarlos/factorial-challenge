@@ -9,7 +9,7 @@ export const useMetric = (id: string, period = Period.DAY) => {
   const [status, setStatus] = useState(Status.LOADING);
   const [metric, setMetric] = useState<Metric>();
 
-  const getMetric = useCallback(async (id: string, period: Period) => {
+  const getMetric = useCallback(async () => {
     try {
       const metric = await MetricsService.getByIdAndPeriod(id, period);
 
@@ -22,11 +22,11 @@ export const useMetric = (id: string, period = Period.DAY) => {
 
       setStatus(Status.ERROR);
     }
-  }, []);
-
-  useEffect(() => {
-    getMetric(id, period);
   }, [id, period]);
 
-  return { status, metric };
+  useEffect(() => {
+    getMetric();
+  }, [getMetric]);
+
+  return { status, metric, refetch: getMetric };
 };

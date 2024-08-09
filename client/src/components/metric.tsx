@@ -14,7 +14,7 @@ export const Metric: FC<Props> = ({ id }) => {
   const [period, setPeriod] = useState(Period.MINUTE);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { metric } = useMetric(id, period);
+  const { metric, refetch } = useMetric(id, period);
 
   const getButtonClass = useCallback(
     (buttonPeriod: Period) => {
@@ -33,8 +33,9 @@ export const Metric: FC<Props> = ({ id }) => {
   const createFakeData = useCallback(async () => {
     setLoading(true);
     await MetricsService.createFakeData(id);
+    await refetch();
     setLoading(false);
-  }, [id]);
+  }, [id, refetch]);
 
   return (
     metric && (
@@ -43,6 +44,7 @@ export const Metric: FC<Props> = ({ id }) => {
           metricId={id}
           show={showModal}
           setShow={setShowModal}
+          refetch={refetch}
         />
 
         <div className="flex gap-4">

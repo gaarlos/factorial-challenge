@@ -5,9 +5,10 @@ import { ModalWrapper } from './modal-wrapper';
 interface Props {
   show: boolean;
   setShow: (show: boolean) => void;
+  refetch: () => Promise<void>;
 }
 
-export const CreateMetricModal: FC<Props> = ({ show, setShow }) => {
+export const CreateMetricModal: FC<Props> = ({ show, setShow, refetch }) => {
   const [name, setName] = useState('');
 
   const onSubmit = useCallback(
@@ -15,10 +16,11 @@ export const CreateMetricModal: FC<Props> = ({ show, setShow }) => {
       event.preventDefault();
 
       await MetricsService.createMetric({ name, entries: [] });
+      await refetch();
 
       setShow(false);
     },
-    [name, setShow],
+    [name, setShow, refetch],
   );
 
   return (

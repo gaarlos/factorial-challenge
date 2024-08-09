@@ -27,5 +27,5 @@ export const useMetrics = () => {
     getAllMetrics();
   }, []);
 
-  return { status, metrics };
+  return { status, metrics, refetch: getAllMetrics };
 };
