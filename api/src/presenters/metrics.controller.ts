@@ -47,6 +47,11 @@ export class MetricsController {
     await this.metricsService.create(createMetricRequestDto);
   }
 
+  @Post(':id')
+  async createFakeData(@Param('id', ParseUUIDPipe) metricId: string) {
+    await this.metricsService.createFakeData(metricId);
+  }
+
   @Patch(':id')
   async addEntryToMetric(
     @Param('id', ParseUUIDPipe) metricId: string,

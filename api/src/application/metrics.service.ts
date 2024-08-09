@@ -36,6 +36,14 @@ export class MetricsService {
     await this.metricRepository.save(metric);
   }
 
+  public async createFakeData(id: string) {
+    const metric = await this.metricRepository.findById(id);
+
+    metric.fillWithFakeData();
+
+    await this.metricRepository.save(metric);
+  }
+
   public async addMetric(metricId: string, addEntryDto: AddEntryDto) {
     await this.metricRepository.findById(metricId);
 

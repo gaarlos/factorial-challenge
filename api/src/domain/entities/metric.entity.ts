@@ -53,6 +53,10 @@ export class Metric {
     return new Metric(props.id, props.name, props.entries);
   }
 
+  public fillWithFakeData() {
+    this.entries = [];
+  }
+
   private getFilterDateByPeriod(period: Period): Date {
     const now = dayjs();
 

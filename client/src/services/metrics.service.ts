@@ -53,6 +53,11 @@ export class MetricsService {
     });
   }
 
+  public static async createFakeData(metricId: string) {
+    const url = this.buildUrl('/:id', { id: metricId });
+    await this.fetch(url, { method: 'POST' });
+  }
+
   public static async addEntryToMetric(metricId: string, entry: MetricEntry) {
     const url = this.buildUrl('/:id', { id: metricId });
     await this.fetch(url, {

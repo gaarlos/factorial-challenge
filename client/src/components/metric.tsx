@@ -3,6 +3,7 @@ import { useMetric } from '../hooks/use-metric';
 import { Period } from '../enums/period';
 import { AddMetricEntryModal } from './modals/add-metric-entry-modal';
 import { MetricChart } from './metric-chart';
+import { MetricsService } from '../services/metrics.service';
 
 interface Props {
   id: string;
@@ -27,6 +28,10 @@ export const Metric: FC<Props> = ({ id }) => {
     [period],
   );
 
+  const createFakeData = useCallback(async () => {
+    await MetricsService.createFakeData(id);
+  }, [id]);
+
   return (
     metric && (
       <div className="mt-10">
@@ -42,7 +47,13 @@ export const Metric: FC<Props> = ({ id }) => {
             className="border border-red-500 hover:bg-red-400/10 text-sm text-red-500 py-1 px-4 rounded"
             onClick={() => setShowModal(true)}
           >
-            Add metric
+            Add entry
+          </button>
+          <button
+            className="border border-purple-400 hover:bg-purple-300/10 text-sm text-purple-400 py-1 px-4 rounded"
+            onClick={() => createFakeData()}
+          >
+            Populate metric
           </button>
         </div>
 
