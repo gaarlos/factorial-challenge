@@ -4,6 +4,7 @@ import { Period } from '../enums/period';
 import { AddMetricEntryModal } from './modals/add-metric-entry-modal';
 import { MetricChart } from './metric-chart';
 import { MetricsService } from '../services/metrics.service';
+import { Loading } from './loading';
 
 interface Props {
   id: string;
@@ -12,6 +13,7 @@ interface Props {
 export const Metric: FC<Props> = ({ id }) => {
   const [period, setPeriod] = useState(Period.MINUTE);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { metric } = useMetric(id, period);
 
   const getButtonClass = useCallback(
@@ -29,7 +31,9 @@ export const Metric: FC<Props> = ({ id }) => {
   );
 
   const createFakeData = useCallback(async () => {
+    setLoading(true);
     await MetricsService.createFakeData(id);
+    setLoading(false);
   }, [id]);
 
   return (
@@ -55,6 +59,8 @@ export const Metric: FC<Props> = ({ id }) => {
           >
             Populate metric
           </button>
+
+          <Loading loading={loading} />
         </div>
 
         <div className="inline-flex rounded-md shadow-sm mt-5" role="group">
