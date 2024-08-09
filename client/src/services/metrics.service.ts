@@ -14,7 +14,7 @@ export class MetricsService {
     return new URL(pathWithValues, BASE_URL);
   }
 
-  private static async fetch<T>(url: URL, init: RequestInit = {}) {
+  private static async fetch(url: URL, init: RequestInit = {}) {
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
@@ -24,27 +24,30 @@ export class MetricsService {
 
     if (!response.ok) throw new NetworkError();
 
-    return response.json() as T;
+    return response;
   }
 
   public static async getAll() {
     const url = this.buildUrl('/');
-    return this.fetch<Metric[]>(url);
+    const response = await this.fetch(url);
+    return response.json() as Promise<Metric[]>;
   }
 
   public static async getById(metricId: string) {
     const url = this.buildUrl('/:id', { id: metricId });
-    return this.fetch<Metric>(url);
+    const response = await this.fetch(url);
+    return response.json() as Promise<Metric>;
   }
 
   public static async getByIdAndPeriod(metricId: string, period: Period) {
     const url = this.buildUrl('/:id/:period', { id: metricId, period });
-    return this.fetch<Metric>(url);
+    const response = await this.fetch(url);
+    return response.json() as Promise<Metric>;
   }
 
   public static async createMetric(metric: Metric) {
     const url = this.buildUrl('/');
-    return this.fetch<void>(url, {
+    await this.fetch(url, {
       method: 'POST',
       body: JSON.stringify(metric),
     });
@@ -52,7 +55,7 @@ export class MetricsService {
 
   public static async addEntryToMetric(metricId: string, entry: MetricEntry) {
     const url = this.buildUrl('/:id', { id: metricId });
-    return this.fetch<void>(url, {
+    await this.fetch(url, {
       method: 'POST',
       body: JSON.stringify(entry),
     });
