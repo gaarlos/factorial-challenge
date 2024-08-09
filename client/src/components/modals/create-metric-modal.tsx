@@ -14,19 +14,11 @@ export const CreateMetricModal: FC<Props> = ({ show, setShow }) => {
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      await MetricsService.createMetric({
-        name,
-        entries: [
-          {
-            timestamp: new Date().toISOString(),
-            value: Math.random(),
-          },
-        ],
-      });
+      await MetricsService.createMetric({ name, entries: [] });
 
       setShow(false);
     },
-    [name],
+    [name, setShow],
   );
 
   return (
@@ -40,7 +32,7 @@ export const CreateMetricModal: FC<Props> = ({ show, setShow }) => {
             type="text"
             value={name}
             onChange={(ev) => setName(ev.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           />
         </label>
 
