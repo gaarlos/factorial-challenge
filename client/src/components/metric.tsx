@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Metric: FC<Props> = ({ id }) => {
-  const [period, setPeriod] = useState(Period.DAY);
+  const [period, setPeriod] = useState(Period.MINUTE);
   const [showModal, setShowModal] = useState(false);
   const { metric } = useMetric(id, period);
 
