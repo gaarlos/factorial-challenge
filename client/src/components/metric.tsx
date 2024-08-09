@@ -57,7 +57,8 @@ export const Metric: FC<Props> = ({ id }) => {
           </button>
           <button
             className="border border-purple-400 hover:bg-purple-300/10 text-sm text-purple-400 py-1 px-4 rounded"
-            onClick={() => createFakeData()}
+            onClick={() => !loading && createFakeData()}
+            disabled={loading}
           >
             Populate metric
           </button>

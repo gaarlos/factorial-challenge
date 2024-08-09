@@ -22,7 +22,7 @@ Open a terminal and navigate to `api` folder, install dependencies and start the
 ```bash
 cd api
 npm install
-npm run start:dev
+npm run start
 ```
 
 Open a terminal and navigate to `client` folder, install dependencies and run the project
